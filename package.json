@@ -1,0 +1,31 @@
+{
+	"name": "wp-lotto-auto-update",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run compile-styles && npm run css-minify",
+		"compile-styles": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 assets/scss/style.scss assets/css/style.css",
+		"css-minify": "cleancss --format breaksWith=lf --source-map --source-map-inline-sources --with-rebase --output assets/css/style.min.css assets/css/style.css"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aphagon/wp-lotto-auto-update.git"
+	},
+	"keywords": [
+		"wordpress",
+		"lotto",
+		"auto",
+		"free"
+	],
+	"author": "Aphagon Phromdesarn",
+	"license": "GPL-2.0",
+	"bugs": {
+		"url": "https://github.com/aphagon/wp-lotto-auto-update/issues"
+	},
+	"homepage": "https://github.com/aphagon/wp-lotto-auto-update#readme",
+	"devDependencies": {
+		"clean-css-cli": "^5.3.2",
+		"node-sass": "^6.0.1"
+	}
+}

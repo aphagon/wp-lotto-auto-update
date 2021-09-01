@@ -1,0 +1,18 @@
+{
+	"name": "aphagon/wp-lotto-auto-update",
+	"authors": [
+		{
+			"name": "Aphagon",
+			"email": "aphagon@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"WpLottoAutoUpdate\\": "includes/"
+		}
+	},
+	"require": {
+		"wruczek/php-file-cache": "^0.0.5",
+		"yahnis-elsts/plugin-update-checker": "^4.11"
+	}
+}
