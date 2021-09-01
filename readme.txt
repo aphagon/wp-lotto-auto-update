@@ -1,6 +1,6 @@
 === Lotto Auto Free ===
 Contributors: vilet224
-Donate link: https://github.com/aphagon/wp-lotto-auto-free
+Donate link: https://github.com/aphagon/wp-lotto-auto-update
 Tags: auto-lotto-score
 Requires at least: 4.9
 Tested up to: 5.8
