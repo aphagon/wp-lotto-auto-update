@@ -59,6 +59,13 @@ final class Activate
 		\add_shortcode('wp-lotto-auto-update',  'WpLottoAutoUpdate\\ShortCode::render');
 		\add_action('init', [self::$instance, 'addQueryVars']);
 		\add_action('wp_enqueue_scripts', [self::$instance, 'enqueueScripts']);
+
+		// Hooks Templates.
+		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_select_date', 10);
+		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_search', 15);
+		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_highlight', 20);
+		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_another_first', 25);
+		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_another', 30);
 	}
 
 	public function activate()
@@ -109,11 +116,7 @@ final class Activate
 		}
 	}
 
-	/**
-	 * Adds a rewrite rule that transforms a URL structure to a set of query vars.
-	 *
-	 * @return void
-	 */
+	// Adds a rewrite rule that transforms a URL structure to a set of query vars.
 	public function addQueryVars()
 	{
 		global $wp;
@@ -130,7 +133,6 @@ final class Activate
 			\update_option('wp_lotto_auto_update_permalinks_flushed', 1);
 		}
 	}
-
 
 	private function insertPage()
 	{

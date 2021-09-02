@@ -32,12 +32,12 @@ class ShortCode
 		}
 
 		if ($path !== '' && !Helper::isPath($path)) {
-			return \__('Path does not exist.', 'wp-lotto-auto-update');
+			return sprintf('<p>%s</p>', \__('Path does not exist.', 'wp-lotto-auto-update'));
 		}
 
 		$result = Helper::curl($path, $date);
 		if (empty($result['success'])) {
-			return \__('Failed to retrieve data.', 'wp-lotto-auto-update');
+			return sprintf('<p>%s</p>', \__('Failed to retrieve data.', 'wp-lotto-auto-update'));
 		}
 
 		ob_start();
@@ -46,23 +46,23 @@ class ShortCode
 			$path = 'main';
 		}
 
-		$start = '
-		<article class="wp-lotto-auto-update-' . $path . '-wrap">
-			<div class="wp-lotto-auto-update-wrap">';
+		$container_start = '
+		<article class="wp-lotto-auto-update-container-' . $path . '">
+			<div class="wp-lotto-auto-update-container__wrap">';
 
-		echo \apply_filters('wp_lotto_auto_update_template_start', $start, $path);
+		echo \apply_filters('wp_lotto_auto_update_container_start', $container_start, $path);
 
-		\do_action("wp_lotto_auto_update_template_{$path}", [
+		\do_action("wp_lotto_auto_update_container_content_{$path}", [
 			'page_id' => $page_id,
 			'date' => $date,
 			'result' => $result,
 		]);
 
-		$end = '
+		$container_end = '
 			</div>
 		</article>';
 
-		echo \apply_filters('wp_lotto_auto_update_template_end', $end, $path);
+		echo \apply_filters('wp_lotto_auto_update_container_end', $container_end, $path);
 
 		return ob_get_clean();
 	}
