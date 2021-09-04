@@ -60,6 +60,10 @@ final class Activate
 		\add_action('init', [self::$instance, 'addQueryVars']);
 		\add_action('wp_enqueue_scripts', [self::$instance, 'enqueueScripts']);
 
+		if (is_admin()) {
+			$admin = new Admin();
+		}
+
 		// Hooks Templates.
 		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_select_date', 10);
 		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_search', 15);
@@ -136,11 +140,11 @@ final class Activate
 
 	private function insertPage()
 	{
-		$page_obj = \get_page_by_path(__('ตรวจลอตเตอรี่', 'wp-lotto-auto-update'));
+		$page_obj = \get_page_by_path(__('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {day} {month} {year}', 'wp-lotto-auto-update'));
 		if (!$page_obj) {
 			\wp_insert_post([
-				'post_title' => __('ตรวจลอตเตอรี่', 'wp-lotto-auto-update'),
-				'post_name' => __('ตรวจลอตเตอรี่', 'wp-lotto-auto-update'),
+				'post_title' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
+				'post_name' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
 				'post_content' => '[wp-lotto-auto-update path="thailotto"]',
 				'comment_status' => 'closed',
 				'post_status' => 'publish',

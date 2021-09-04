@@ -1,6 +1,6 @@
 <?php
 
-namespace LottoAutoFree;
+namespace WpLottoAutoUpdate;
 
 defined('ABSPATH') || die();
 
