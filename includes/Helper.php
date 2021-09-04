@@ -2,7 +2,7 @@
 
 namespace WpLottoAutoUpdate;
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+defined('ABSPATH') || die();
 
 use Wruczek\PhpFileCache\PhpFileCache;
 

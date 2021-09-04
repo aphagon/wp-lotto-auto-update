@@ -2,7 +2,7 @@
 
 namespace WpLottoAutoUpdate;
 
-if (!defined('ABSPATH')) exit; // Exit if accessed directly
+defined('ABSPATH') || die();
 
 use Puc_v4_Factory;
 
@@ -18,6 +18,37 @@ final class Activate
 	private static $instance;
 
 	/**
+	 * class Page
+	 *
+	 * @access private
+	 * @var Page
+	 */
+	private $page;
+
+	/**
+	 * class ShortCode
+	 *
+	 * @access private
+	 * @var ShortCode
+	 */
+	private $shortCode;
+
+	/**
+	 * class Admin
+	 *
+	 * @access private
+	 * @var Admin
+	 */
+	private $admin;
+
+	public function __construct()
+	{
+		$this->page = new Page();
+		$this->shortCode = new ShortCode();
+		$this->admin = new Admin();
+	}
+
+	/**
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -28,8 +59,6 @@ final class Activate
 	public static function instance()
 	{
 		if (null === self::$instance) {
-			self::$instance = new self();
-
 			// Load Composer Autoload
 			require_once WP_LOTTO_AUTO_UPDATE_DIR . 'vendor/autoload.php';
 
@@ -37,6 +66,8 @@ final class Activate
 			foreach (glob(WP_LOTTO_AUTO_UPDATE_DIR . 'layouts/*.php') as $filename) {
 				require_once $filename;
 			}
+
+			self::$instance = new self();
 
 			\register_activation_hook(WP_LOTTO_AUTO_UPDATE_FILE, [self::$instance, 'activate']);
 			\register_uninstall_hook(WP_LOTTO_AUTO_UPDATE_FILE, 'WpLottoAutoUpdate\\Activate::uninstall');
@@ -56,12 +87,17 @@ final class Activate
 		);
 		$updateChecker->checkForUpdates();
 
-		\add_shortcode('wp-lotto-auto-update',  'WpLottoAutoUpdate\\ShortCode::render');
-		\add_action('init', [self::$instance, 'addQueryVars']);
 		\add_action('wp_enqueue_scripts', [self::$instance, 'enqueueScripts']);
 
-		if (is_admin()) {
-			$admin = new Admin();
+		// Run hook short code.
+		$this->shortCode->runAction();
+
+		// Run hook page.
+		$this->page->runAction();
+
+		// Run hook admin form.
+		if (\is_admin()) {
+			$this->admin->runAction();
 		}
 
 		// Hooks Templates.
@@ -79,9 +115,7 @@ final class Activate
 			mkdir(WP_LOTTO_AUTO_UPDATE_CACHE_DIR, 0777, true);
 		}
 
-		\add_option('wp_lotto_auto_update_permalinks_flushed', 0);
-
-		$this->insertPage();
+		$this->page->insert();
 	}
 
 	public function uninstall()
@@ -101,22 +135,7 @@ final class Activate
 		}
 		rmdir(WP_LOTTO_AUTO_UPDATE_CACHE_DIR);
 
-		\delete_option('wp_lotto_auto_update_permalinks_flushed');
-
-		$options = \get_option('wp_lotto_auto_update_get_options');
-		if (isset($options['page_ids']) || is_array($options['page_ids'])) {
-			foreach ($options['page_ids'] as $pages) {
-				foreach ($pages as $page_id) {
-					$post = get_post($page_id);
-					if ($post && $post->post_status == 'publish') {
-						\wp_update_post([
-							'ID' => $post->ID,
-							'post_status' => 'trash'
-						]);
-					}
-				}
-			}
-		}
+		$this->page->trash();
 	}
 
 	public function enqueueScripts()
@@ -133,57 +152,5 @@ final class Activate
 			);
 			\wp_enqueue_style('wp-lotto-auto-update-stylesheet');
 		}
-	}
-
-	// Adds a rewrite rule that transforms a URL structure to a set of query vars.
-	public function addQueryVars()
-	{
-		global $wp;
-		$wp->add_query_var('lotto-date');
-
-		\add_rewrite_rule(
-			'(.?.+?)/lotto-date-([0-9]{4}-[0-9]{1,2}-[0-9]{1,2})/?$',
-			'index.php?pagename=$matches[1]&lotto-date=$matches[2]',
-			'top'
-		);
-
-		if (!\get_option('wp_lotto_auto_update_permalinks_flushed')) {
-			\flush_rewrite_rules(false);
-			\update_option('wp_lotto_auto_update_permalinks_flushed', 1);
-		}
-	}
-
-	private function insertPage()
-	{
-		$options = \get_option('wp_lotto_auto_update_get_options');
-
-		if (!isset($options['page_ids']) || !is_array($options['page_ids'])) {
-			$options['page_ids'] = [];
-		}
-
-		if (!isset($options['page_ids']['thailotto'])) {
-			$page_obj = \get_page_by_path(__('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {dd} {mm} {yyyy}', 'wp-lotto-auto-update'));
-			if (!$page_obj) {
-				$page_id = \wp_insert_post([
-					'post_title' => __('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {dd} {mm} {yyyy}', 'wp-lotto-auto-update'),
-					'post_name' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
-					'post_content' => '[wp-lotto-auto-update path="thailotto"]',
-					'comment_status' => 'closed',
-					'post_status' => 'publish',
-					'post_type' => 'page',
-				]);
-			} else {
-				if ($page_obj->post_status == 'trash') {
-					$page_id = \wp_update_post([
-						'ID' => $page_obj->ID,
-						'post_status' => 'publish'
-					]);
-				}
-			}
-
-			$options['page_ids']['thailotto'] = $page_id;
-		}
-
-		\update_option('wp_lotto_auto_update_get_options', $options);
 	}
 }

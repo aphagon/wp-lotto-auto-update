@@ -27,4 +27,4 @@ define('WP_LOTTO_AUTO_UPDATE_LAYOUT_DIR', trailingslashit(plugin_dir_path(__FILE
 define('WP_LOTTO_AUTO_UPDATE_API_URL', 'https://aphagon-dev.000webhostapp.com/lotto/');
 
 require_once WP_LOTTO_AUTO_UPDATE_DIR . 'includes/Activate.php';
-$lotto_activate = WpLottoAutoUpdate\Activate::instance();
+$lottoActivate = WpLottoAutoUpdate\Activate::instance();

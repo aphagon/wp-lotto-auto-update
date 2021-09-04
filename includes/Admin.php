@@ -10,6 +10,10 @@ class Admin
 
 	public function __construct()
 	{
+	}
+
+	public function runAction()
+	{
 		\add_action('admin_menu', [$this, 'addPluginPage']);
 		\add_action('admin_init', [$this, 'pageInit']);
 	}
@@ -94,7 +98,7 @@ class Admin
 
 		if ($checked) {
 			printf(
-				'<span class="description">ShortCode: <code>[wp-lotto-auto-update path="thailotto" page-id="%d"]</code></span>',
+				' <span class="description">ShortCode: <code>[wp-lotto-auto-update path="thailotto" page_id="%d"]</code></span>',
 				$this->options['page_ids']['thailotto']
 			);
 		}

@@ -8,21 +8,30 @@ use WpLottoAutoUpdate\Helper;
 
 class ShortCode
 {
+	public function __construct()
+	{
+	}
+
+	public function runAction()
+	{
+		\add_shortcode('wp-lotto-auto-update',  [$this, 'render']);
+	}
+
 	/**
-	 * The [wp-lotto-auto-update path="xxxx"] shortCode.
+	 * The [wp-lotto-auto-update path="x" page_id="x"] shortCode.
 	 *
 	 * Accepts a title and will display a box.
 	 *
 	 * @param array $atts attributes. Default empty.
 	 * @return string ShortCode output.
 	 */
-	public static function render($atts)
+	public function render($atts)
 	{
 		// normalize attribute keys, lowercase
 		$atts = array_change_key_case((array) $atts, CASE_LOWER);
 		$atts = \shortcode_atts([
 			'path' => '',
-			'page-id' => '',
+			'page_id' => '',
 		], $atts);
 		extract($atts);
 
