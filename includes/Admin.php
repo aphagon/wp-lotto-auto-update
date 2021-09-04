@@ -86,9 +86,17 @@ class Admin
 
 	public function inputPageThaiLottoCallback()
 	{
+		$checked = !empty($this->options['page_ids']['thailotto']);
 		printf(
-			'<input class="small-text" type="number" name="wp_lotto_auto_update_get_options[page_ids][thailotto]" id="PageIDThaiLotto" value="%s">',
-			!empty($this->options['page_ids']['thailotto']) ? \esc_attr($this->options['page_ids']['thailotto']) : 0
+			'<input class="small-text" type="number" name="wp_lotto_auto_update_get_options[page_ids][thailotto]" id="PageIDThaiLottoInput" value="%s">',
+			$checked ? \esc_attr($this->options['page_ids']['thailotto']) : 0
 		);
+
+		if ($checked) {
+			printf(
+				'<span class="description">ShortCode: <code>[wp-lotto-auto-update path="thailotto" page-id="%d"]</code></span>',
+				$this->options['page_ids']['thailotto']
+			);
+		}
 	}
 }

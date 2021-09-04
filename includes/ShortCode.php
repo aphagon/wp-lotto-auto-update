@@ -22,7 +22,7 @@ class ShortCode
 		$atts = array_change_key_case((array) $atts, CASE_LOWER);
 		$atts = \shortcode_atts([
 			'path' => '',
-			'page_id' => '',
+			'page-id' => '',
 		], $atts);
 		extract($atts);
 

@@ -102,6 +102,21 @@ final class Activate
 		rmdir(WP_LOTTO_AUTO_UPDATE_CACHE_DIR);
 
 		\delete_option('wp_lotto_auto_update_permalinks_flushed');
+
+		$options = \get_option('wp_lotto_auto_update_get_options');
+		if (isset($options['page_ids']) || is_array($options['page_ids'])) {
+			foreach ($options['page_ids'] as $pages) {
+				foreach ($pages as $page_id) {
+					$post = get_post($page_id);
+					if ($post && $post->post_status == 'publish') {
+						\wp_update_post([
+							'ID' => $post->ID,
+							'post_status' => 'trash'
+						]);
+					}
+				}
+			}
+		}
 	}
 
 	public function enqueueScripts()
@@ -140,23 +155,35 @@ final class Activate
 
 	private function insertPage()
 	{
-		$page_obj = \get_page_by_path(__('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {day} {month} {year}', 'wp-lotto-auto-update'));
-		if (!$page_obj) {
-			\wp_insert_post([
-				'post_title' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
-				'post_name' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
-				'post_content' => '[wp-lotto-auto-update path="thailotto"]',
-				'comment_status' => 'closed',
-				'post_status' => 'publish',
-				'post_type' => 'page',
-			]);
-		} else {
-			if ($page_obj->post_status == 'trash') {
-				\wp_update_post([
-					'ID' => $page_obj->ID,
-					'post_status' => 'publish'
-				]);
-			}
+		$options = \get_option('wp_lotto_auto_update_get_options');
+
+		if (!isset($options['page_ids']) || !is_array($options['page_ids'])) {
+			$options['page_ids'] = [];
 		}
+
+		if (!isset($options['page_ids']['thailotto'])) {
+			$page_obj = \get_page_by_path(__('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {dd} {mm} {yyyy}', 'wp-lotto-auto-update'));
+			if (!$page_obj) {
+				$page_id = \wp_insert_post([
+					'post_title' => __('ตรวจสลากกินแบ่งรัฐบาล งวดที่ {dd} {mm} {yyyy}', 'wp-lotto-auto-update'),
+					'post_name' => __('ตรวจสลากกินแบ่งรัฐบาล', 'wp-lotto-auto-update'),
+					'post_content' => '[wp-lotto-auto-update path="thailotto"]',
+					'comment_status' => 'closed',
+					'post_status' => 'publish',
+					'post_type' => 'page',
+				]);
+			} else {
+				if ($page_obj->post_status == 'trash') {
+					$page_id = \wp_update_post([
+						'ID' => $page_obj->ID,
+						'post_status' => 'publish'
+					]);
+				}
+			}
+
+			$options['page_ids']['thailotto'] = $page_id;
+		}
+
+		\update_option('wp_lotto_auto_update_get_options', $options);
 	}
 }
