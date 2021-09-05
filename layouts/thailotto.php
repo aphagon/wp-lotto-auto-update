@@ -12,7 +12,13 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
 	 */
 	function wp_lotto_auto_update_layout_thailotto_select_date(array $data)
 	{
-		echo '<p>wp_lotto_auto_update_layout_thailotto_select_date</p>';
+?>
+
+		<pre>
+			<?php print_r($data); ?>
+		</pre>
+
+<?php
 	}
 }
 

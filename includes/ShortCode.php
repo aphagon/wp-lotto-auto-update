@@ -31,7 +31,6 @@ class ShortCode
 		$atts = array_change_key_case((array) $atts, CASE_LOWER);
 		$atts = \shortcode_atts([
 			'path' => '',
-			'page_id' => '',
 		], $atts);
 		extract($atts);
 
@@ -51,7 +50,7 @@ class ShortCode
 
 		ob_start();
 
-		if ($path === '') {
+		if ($path == '') {
 			$path = 'main';
 		}
 
@@ -62,7 +61,6 @@ class ShortCode
 		echo \apply_filters('wp_lotto_auto_update_container_start', $container_start, $path);
 
 		\do_action("wp_lotto_auto_update_container_content_{$path}", [
-			'page_id' => $page_id,
 			'date' => $date,
 			'result' => $result,
 		]);

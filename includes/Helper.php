@@ -38,29 +38,30 @@ final class Helper
 	}
 
 	/**
-	 * @param string $date yyyy-mm-dd
-	 * @return array
-	 */
-	public static function splitDate(string $date)
-	{
-		list($y, $m, $d) = explode('-', $date);
-		return [
-			'year' => $y,
-			'month' => $m,
-			'day' => $d,
-		];
-	}
-
-	/**
 	 * @param int $month
 	 * @return array|string
 	 */
 	public static function getMonths(int $month = 0)
 	{
-		$months = ['', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฏาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
-		if ($month === 0)
-			return $months;
+		$months = [
+			'',
+			__('มกราคม', 'wp-lotto-auto-update'),
+			__('กุมภาพันธ์', 'wp-lotto-auto-update'),
+			__('มีนาคม', 'wp-lotto-auto-update'),
+			__('เมษายน', 'wp-lotto-auto-update'),
+			__('พฤษภาคม', 'wp-lotto-auto-update'),
+			__('มิถุนายน', 'wp-lotto-auto-update'),
+			__('กรกฏาคม', 'wp-lotto-auto-update'),
+			__('สิงหาคม', 'wp-lotto-auto-update'),
+			__('กันยายน', 'wp-lotto-auto-update'),
+			__('ตุลาคม', 'wp-lotto-auto-update'),
+			__('พฤศจิกายน', 'wp-lotto-auto-update'),
+			__('ธันวาคม', 'wp-lotto-auto-update')
+		];
 
+		if ($month === 0) {
+			return $months;
+		}
 		return $months[sprintf('%d', $month)];
 	}
 
@@ -70,11 +71,75 @@ final class Helper
 	 */
 	public static function getMonthShort(int $month = 0)
 	{
-		$months = ['', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-		if ($month === 0)
+		$months = [
+			'',
+			__('ม.ค.', 'wp-lotto-auto-update'),
+			__('ก.พ.', 'wp-lotto-auto-update'),
+			__('มี.ค.', 'wp-lotto-auto-update'),
+			__('เม.ย.', 'wp-lotto-auto-update'),
+			__('พ.ค.', 'wp-lotto-auto-update'),
+			__('มิ.ย.', 'wp-lotto-auto-update'),
+			__('ก.ค.', 'wp-lotto-auto-update'),
+			__('ส.ค.', 'wp-lotto-auto-update'),
+			__('ก.ย.', 'wp-lotto-auto-update'),
+			__('ต.ค.', 'wp-lotto-auto-update'),
+			__('พ.ย.', 'wp-lotto-auto-update'),
+			__('ธ.ค.', 'wp-lotto-auto-update')
+		];
+		if ($month === 0) {
 			return $months;
-
+		}
 		return $months[sprintf('%d', $month)];
+	}
+
+	/**
+	 * @param string $str
+	 * @param string $date
+	 *
+	 * @return string
+	 */
+	public static function replaceTitleDate(string $str, string $date)
+	{
+		if (!Helper::isDate($date)) {
+			$date = date('Y-m-d', \current_time('timestamp'));
+		}
+
+		$time = strtotime($date);
+
+		$dd = date_i18n('j', $time);
+		$mm = date_i18n('F', $time);
+		$yyyy = intval(date_i18n('Y', $time));
+
+		return str_replace(['{dd}', '{mm}', '{yyyy}'], [$dd, $mm, $yyyy], $str);
+	}
+
+	/**
+	 * @param string $str
+	 *
+	 * @return string date YYYY-MM-DD
+	 */
+	public static function replaceThaiDate(string $str)
+	{
+		$exp = explode(' ', $str);
+		$arr = array_map('trim', $exp);
+		list($dd, $mm, $yyyy) = $arr;
+
+		// full month.
+		$months = static::getMonths();
+		$mm = array_search($mm, $months);
+
+		// check short month.
+		if (empty($mm)) {
+			$months = static::getMonthShort();
+			$mm = array_search($mm, $months);
+		}
+
+		$date = sprintf('%d-%02d-%02d', $yyyy, $mm, $dd);
+		if (!Helper::isDate($date)) {
+			return '';
+		}
+
+		return $date;
 	}
 
 	/**
