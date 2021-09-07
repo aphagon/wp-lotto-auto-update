@@ -1,86 +1,40 @@
 <?php
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
-	/**
-	 * @param array $data {
-	 *  'page_id' => int,
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'result' => array
-	 * }
-	 *
-	 * @return string
-	 */
-	function wp_lotto_auto_update_layout_thailotto_select_date(array $data)
-	{
-?>
+defined('ABSPATH') || die();
 
-		<pre>
-			<?php print_r($data); ?>
-		</pre>
-
-<?php
-	}
+// Load Files.
+foreach (glob(WP_LOTTO_AUTO_UPDATE_DIR . 'layouts/thailotto/*.php') as $file) {
+	require_once $file;
 }
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_search')) {
+if (!function_exists('wp_lotto_auto_update_container_thailotto')) {
 	/**
-	 * @param array $data {
-	 *  'page_id' => int,
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'result' => array
-	 * }
+	 * @param array $data
+	 * @param array $layouts
+	 * @param string $date YYYY-MM-DD
 	 *
 	 * @return string
 	 */
-	function wp_lotto_auto_update_layout_thailotto_search(array $data)
+	function wp_lotto_auto_update_container_thailotto(array $data, array $layouts, string $date)
 	{
-		echo '<p>wp_lotto_auto_update_layout_thailotto_search</p>';
-	}
-}
+		$lists = apply_filters('wp_lotto_auto_update_container_thailotto_layouts', [
+			// 'search',
+			// 'select-date',
+			'highlight',
+			// 'another-first',
+			// 'another',
+		]);
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_highlight')) {
-	/**
-	 * @param array $data {
-	 *  'page_id' => int,
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'result' => array
-	 * }
-	 *
-	 * @return string
-	 */
-	function wp_lotto_auto_update_layout_thailotto_highlight(array $data)
-	{
-		echo '<p>wp_lotto_auto_update_layout_thailotto_highlight</p>';
-	}
-}
+		if (empty($layouts)) {
+			$layouts = $lists;
+		}
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_another_first')) {
-	/**
-	 * @param array $data {
-	 *  'page_id' => int,
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'result' => array
-	 * }
-	 *
-	 * @return string
-	 */
-	function wp_lotto_auto_update_layout_thailotto_another_first(array $data)
-	{
-		echo '<p>wp_lotto_auto_update_layout_thailotto_another_first</p>';
-	}
-}
-
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_another')) {
-	/**
-	 * @param array $data {
-	 *  'page_id' => int,
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'result' => array
-	 * }
-	 *
-	 * @return string
-	 */
-	function wp_lotto_auto_update_layout_thailotto_another(array $data)
-	{
+		foreach ($layouts as $layout) {
+			if (in_array($layout, $lists)) {
+				do_action("wp_lotto_auto_update_container_thailotto_layout_{$layout}_before", $data, $date);
+				do_action("wp_lotto_auto_update_container_thailotto_layout_{$layout}", $data, $date);
+				do_action("wp_lotto_auto_update_container_thailotto_layout_{$layout}_after", $data, $date);
+			}
+		}
 	}
 }

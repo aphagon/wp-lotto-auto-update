@@ -62,11 +62,6 @@ final class Activate
 			// Load Composer Autoload
 			require_once WP_LOTTO_AUTO_UPDATE_DIR . 'vendor/autoload.php';
 
-			// Load Layout Files.
-			foreach (glob(WP_LOTTO_AUTO_UPDATE_DIR . 'layouts/*.php') as $filename) {
-				require_once $filename;
-			}
-
 			self::$instance = new self();
 
 			\register_activation_hook(WP_LOTTO_AUTO_UPDATE_FILE, [self::$instance, 'activate']);
@@ -101,11 +96,8 @@ final class Activate
 		}
 
 		// Hooks Templates.
-		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_select_date', 10);
-		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_search', 15);
-		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_highlight', 20);
-		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_another_first', 25);
-		\add_action('wp_lotto_auto_update_container_content_thailotto', 'wp_lotto_auto_update_layout_thailotto_another', 30);
+		$tag = 'wp_lotto_auto_update_container_thailotto';
+		\add_action('wp_lotto_auto_update_container_thailotto', 'wp_lotto_auto_update_container_thailotto', 10, 3);
 	}
 
 	public function activate()

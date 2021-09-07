@@ -38,61 +38,6 @@ final class Helper
 	}
 
 	/**
-	 * @param int $month
-	 * @return array|string
-	 */
-	public static function getMonths(int $month = 0)
-	{
-		$months = [
-			'',
-			__('มกราคม', 'wp-lotto-auto-update'),
-			__('กุมภาพันธ์', 'wp-lotto-auto-update'),
-			__('มีนาคม', 'wp-lotto-auto-update'),
-			__('เมษายน', 'wp-lotto-auto-update'),
-			__('พฤษภาคม', 'wp-lotto-auto-update'),
-			__('มิถุนายน', 'wp-lotto-auto-update'),
-			__('กรกฏาคม', 'wp-lotto-auto-update'),
-			__('สิงหาคม', 'wp-lotto-auto-update'),
-			__('กันยายน', 'wp-lotto-auto-update'),
-			__('ตุลาคม', 'wp-lotto-auto-update'),
-			__('พฤศจิกายน', 'wp-lotto-auto-update'),
-			__('ธันวาคม', 'wp-lotto-auto-update')
-		];
-
-		if ($month === 0) {
-			return $months;
-		}
-		return $months[sprintf('%d', $month)];
-	}
-
-	/**
-	 * @param int $month
-	 * @return array|string
-	 */
-	public static function getMonthShort(int $month = 0)
-	{
-		$months = [
-			'',
-			__('ม.ค.', 'wp-lotto-auto-update'),
-			__('ก.พ.', 'wp-lotto-auto-update'),
-			__('มี.ค.', 'wp-lotto-auto-update'),
-			__('เม.ย.', 'wp-lotto-auto-update'),
-			__('พ.ค.', 'wp-lotto-auto-update'),
-			__('มิ.ย.', 'wp-lotto-auto-update'),
-			__('ก.ค.', 'wp-lotto-auto-update'),
-			__('ส.ค.', 'wp-lotto-auto-update'),
-			__('ก.ย.', 'wp-lotto-auto-update'),
-			__('ต.ค.', 'wp-lotto-auto-update'),
-			__('พ.ย.', 'wp-lotto-auto-update'),
-			__('ธ.ค.', 'wp-lotto-auto-update')
-		];
-		if ($month === 0) {
-			return $months;
-		}
-		return $months[sprintf('%d', $month)];
-	}
-
-	/**
 	 * @param string $str
 	 * @param string $date
 	 *
@@ -101,7 +46,7 @@ final class Helper
 	public static function replaceTitleDate(string $str, string $date)
 	{
 		if (!Helper::isDate($date)) {
-			$date = date('Y-m-d', \current_time('timestamp'));
+			$date = date_i18n('Y-m-d', \current_time('timestamp'));
 		}
 
 		$time = strtotime($date);
@@ -124,15 +69,21 @@ final class Helper
 		$arr = array_map('trim', $exp);
 		list($dd, $mm, $yyyy) = $arr;
 
-		// full month.
-		$months = static::getMonths();
-		$mm = array_search($mm, $months);
-
-		// check short month.
-		if (empty($mm)) {
-			$months = static::getMonthShort();
-			$mm = array_search($mm, $months);
-		}
+		$months = [
+			'มกราคม' => 1,
+			'กุมภาพันธ์' => 2,
+			'มีนาคม' => 3,
+			'เมษายน' => 4,
+			'พฤษภาคม' => 5,
+			'มิถุนายน' => 6,
+			'กรกฏาคม' => 7,
+			'สิงหาคม' => 8,
+			'กันยายน' => 9,
+			'ตุลาคม' => 10,
+			'พฤศจิกายน' => 11,
+			'ธันวาคม' => 12,
+		];
+		$mm = !empty($months[$mm]) ? $months[$mm] : 0;
 
 		$date = sprintf('%d-%02d-%02d', $yyyy, $mm, $dd);
 		if (!Helper::isDate($date)) {

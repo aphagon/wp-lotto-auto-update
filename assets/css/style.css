@@ -1,0 +1,440 @@
+.wp-lotto-auto-update-thailotto {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  /* form search */
+}
+
+.wp-lotto-auto-update-thailotto em {
+  background-color: #e8e8e8;
+  clear: both;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 14px;
+  display: block;
+  font-style: normal;
+}
+
+.wp-lotto-auto-update-thailotto em strong {
+  color: #000000;
+}
+
+.wp-lotto-auto-update-thailotto .search-number-text {
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  background-color: #f0f0f0;
+  color: #d12530;
+  border: 1px solid #d1d1d1;
+}
+
+.wp-lotto-auto-update-thailotto__another-first {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  padding: 15px 0 0 0;
+  margin-bottom: 20px;
+  border-top: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.wp-lotto-auto-update-thailotto__another-first > div {
+  flex: 0 0 26%;
+  padding: 10px 0px 20px 0px;
+  text-align: center;
+}
+
+.wp-lotto-auto-update-thailotto__another-first > div h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.wp-lotto-auto-update-thailotto__another-first > strong {
+  flex: auto;
+  align-self: center;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 32px;
+  line-height: 60px;
+  color: #5e5e5e;
+}
+
+@media screen and (max-width: 768px) {
+  .wp-lotto-auto-update-thailotto__another-first {
+    display: block;
+  }
+  .wp-lotto-auto-update-thailotto__another-first > div {
+    flex: 0 0 100%;
+  }
+  .wp-lotto-auto-update-thailotto__another-first > strong {
+    float: left;
+    width: 50%;
+  }
+}
+
+.wp-lotto-auto-update-thailotto__another {
+  display: block;
+  padding: 10px 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.wp-lotto-auto-update-thailotto__another > header {
+  display: block;
+  text-align: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid #fff;
+  font-size: 22px;
+}
+
+.wp-lotto-auto-update-thailotto__another > header > h3 {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.wp-lotto-auto-update-thailotto__another > header > h3 > strong {
+  font-size: 24px;
+  margin-right: 8px;
+  font-weight: bold;
+  display: inline;
+}
+
+.wp-lotto-auto-update-thailotto__another > header > h3 > small {
+  font-size: 16px;
+  font-style: normal;
+  color: #00b464;
+}
+
+.wp-lotto-auto-update-thailotto__another > ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.wp-lotto-auto-update-thailotto__another > ul > li {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wp-lotto-auto-update-thailotto__another > ul > li > strong {
+  list-style: none;
+  flex-basis: calc(100% / 5);
+  padding: 8px 0px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.wp-lotto-auto-update-thailotto__another > ul > li:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+@media screen and (max-width: 768px) {
+  .wp-lotto-auto-update-thailotto__another > header > h3 > small {
+    display: block;
+    padding: 5px 0;
+    margin-top: 8px;
+    background-color: #f0f0f0;
+  }
+  .wp-lotto-auto-update-thailotto__another > ul > li > strong {
+    font-size: 14px;
+  }
+  .wp-lotto-auto-update-thailotto__another > ul > li:nth-child(odd) {
+    background-color: transparent;
+  }
+}
+
+.wp-lotto-auto-update-thailotto__highlight {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section {
+  text-align: center;
+  border: 2px solid #fff;
+  height: auto;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section > h3 {
+  background-color: #272727;
+  font-weight: normal;
+  padding: 4px 6px;
+  text-align: center;
+  font-size: 24px;
+  display: block;
+  color: #fff;
+  margin: 0;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section > strong {
+  font-size: 40px;
+  display: block;
+  padding: 20px 0;
+  background-color: #f8f8f8;
+  line-height: 60px;
+  overflow: hidden;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section:first-child {
+  flex: 0 0 28%;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section:first-child > strong {
+  color: #c01414;
+  font-size: 45px;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section:last-child {
+  flex: 0 0 22%;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section:nth-child(2), .wp-lotto-auto-update-thailotto__highlight > section:nth-child(3) {
+  flex: auto;
+}
+
+.wp-lotto-auto-update-thailotto__highlight > section:nth-child(2) > strong, .wp-lotto-auto-update-thailotto__highlight > section:nth-child(3) > strong {
+  float: left;
+  width: 50%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .wp-lotto-auto-update-thailotto__highlight {
+    flex-direction: column;
+  }
+  .wp-lotto-auto-update-thailotto__highlight > section {
+    margin-bottom: 10px;
+  }
+  .wp-lotto-auto-update-thailotto__highlight > section:first-child, .wp-lotto-auto-update-thailotto__highlight > section:last-child, .wp-lotto-auto-update-thailotto__highlight > section:nth-child(2), .wp-lotto-auto-update-thailotto__highlight > section:nth-child(3) {
+    flex: 0 0 100%;
+  }
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  margin: 25px 0;
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form .__column {
+  flex-grow: 1;
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form .__column-select, .wp-lotto-auto-update-thailotto__select-date-form .__column-input {
+  padding: 3px 10px 3px 10px;
+  margin: 0px;
+  width: 100%;
+  height: 46px;
+  border: 1px solid #cccccc;
+  background-color: white !important;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #333;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form .__column .-select {
+  cursor: pointer;
+  text-align-last: center;
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form .__column .-button[type="button"] {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  margin: 0px;
+  padding: 11px 0px 11px 0px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  text-align: center;
+  line-height: 150%;
+  background-color: #272726 !important;
+  border: 0px;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.wp-lotto-auto-update-thailotto__select-date-form .__column .-button[type="button"]:hover {
+  color: #ececec;
+  background-color: #383837 !important;
+}
+
+.wp-lotto-auto-update__wrap {
+  width: 100%;
+}
+
+.wp-lotto-auto-update {
+  /* form search */
+}
+
+.wp-lotto-auto-update__title {
+  margin: 0;
+  text-align: center;
+  padding: 10px 15px;
+  background-color: #272727;
+  color: #fff;
+}
+
+.wp-lotto-auto-update__title-link {
+  color: #fff !important;
+}
+
+@media screen and (max-width: 728px) {
+  .wp-lotto-auto-update__title {
+    padding: 10px;
+    font-size: 1.25em;
+  }
+}
+
+.wp-lotto-auto-update__empty-item {
+  text-align: center;
+  font-size: 1.35em;
+  background-color: #dbdbdb;
+  padding: 12px 10px;
+  color: #ac0a0a;
+}
+
+.wp-lotto-auto-update__table {
+  border: 1px solid #dee2e6;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.wp-lotto-auto-update__table tr th {
+  background-color: #eeeeee;
+}
+
+.wp-lotto-auto-update__table tr td {
+  background-color: #f8f8f8;
+}
+
+.wp-lotto-auto-update__table th,
+.wp-lotto-auto-update__table td {
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.wp-lotto-auto-update__table th {
+  color: #2d2d2d;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 728px) {
+  .wp-lotto-auto-update__table {
+    border: 0;
+  }
+  .wp-lotto-auto-update__table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  .wp-lotto-auto-update__table tr {
+    display: block;
+    margin-bottom: 0.625em;
+  }
+  .wp-lotto-auto-update__table th,
+  .wp-lotto-auto-update__table td {
+    display: block;
+    text-align: right;
+    border-bottom: 0px;
+  }
+  .wp-lotto-auto-update__table th:before,
+  .wp-lotto-auto-update__table td:before {
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+  }
+  .wp-lotto-auto-update__table th:last-child,
+  .wp-lotto-auto-update__table td:last-child {
+    border-bottom: 1px solid #dee2e6;
+  }
+}
+
+.wp-lotto-auto-update__select-date-form {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  margin: 25px 0;
+}
+
+.wp-lotto-auto-update__select-date-form__column {
+  flex-grow: 1;
+}
+
+.wp-lotto-auto-update__select-date-form__column-select, .wp-lotto-auto-update__select-date-form__column-input {
+  padding: 3px 10px 3px 10px;
+  margin: 0px;
+  width: 100%;
+  height: 46px;
+  border: 1px solid #cccccc;
+  background-color: white !important;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #333;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.wp-lotto-auto-update__select-date-form__column .-select {
+  cursor: pointer;
+  text-align-last: center;
+}
+
+.wp-lotto-auto-update__select-date-form__column .-button[type="button"] {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  margin: 0px;
+  padding: 11px 0px 11px 0px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  text-align: center;
+  line-height: 150%;
+  background-color: #272726 !important;
+  border: 0px;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.wp-lotto-auto-update__select-date-form__column .-button[type="button"]:hover {
+  color: #ececec;
+  background-color: #383837 !important;
+}
+
+.wp-lotto-auto-update__mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .wp-lotto-auto-update__desktop em {
+    display: none;
+  }
+  .wp-lotto-auto-update__mobile {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

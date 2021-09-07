@@ -9,7 +9,10 @@
 	"autoload": {
 		"psr-4": {
 			"WpLottoAutoUpdate\\": "includes/"
-		}
+		},
+		"files": [
+			"layouts/thailotto.php"
+		]
 	},
 	"require": {
 		"wruczek/php-file-cache": "^0.0.5",

@@ -1,0 +1,178 @@
+$title-bg-color: #272727;
+$title-font-color: #fff;
+$table-border-color: #dee2e6;
+$table-td-bg-color: #f8f8f8;
+$table-th-bg-color: #eeeeee;
+$table-th-font-color: #2d2d2d;
+
+@import "thailotto";
+
+.wp-lotto-auto-update__wrap {
+	width: 100%;
+}
+
+.wp-lotto-auto-update {
+	&__title {
+		margin: 0;
+		text-align: center;
+		padding: 10px 15px;
+		background-color: $title-bg-color;
+		color: $title-font-color;
+
+		&-link {
+			color: $title-font-color !important;
+		}
+
+		// Mobile.
+		@media screen and (max-width: 728px) {
+			padding: 10px;
+			font-size: 1.25em;
+		}
+	}
+
+	&__empty-item {
+		text-align: center;
+		font-size: 1.35em;
+		background-color: #dbdbdb;
+		padding: 12px 10px;
+		color: #ac0a0a;
+	}
+
+	&__table {
+		border: 1px solid $table-border-color;
+		border-collapse: collapse;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		table-layout: fixed;
+
+		tr {
+			th {
+				background-color: $table-th-bg-color;
+			}
+			td {
+				background-color: $table-td-bg-color;
+			}
+		}
+
+		th,
+		td {
+			padding: 0.75rem;
+			text-align: center;
+		}
+
+		th {
+			color: $table-th-font-color;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		// Mobile.
+		@media screen and (max-width: 728px) {
+			border: 0;
+
+			thead {
+				border: none;
+				clip: rect(0 0 0 0);
+				height: 1px;
+				margin: -1px;
+				overflow: hidden;
+				padding: 0;
+				position: absolute;
+				width: 1px;
+			}
+
+			tr {
+				display: block;
+				margin-bottom: 0.625em;
+			}
+
+			th,
+			td {
+				display: block;
+				text-align: right;
+				border-bottom: 0px;
+
+				&:before {
+					content: attr(data-label);
+					float: left;
+					text-transform: uppercase;
+				}
+
+				&:last-child {
+					border-bottom: 1px solid $table-border-color;
+				}
+			}
+		}
+	}
+
+	/* form search */
+	&__select-date-form {
+		width: 100%;
+		display: flex;
+		align-items: stretch;
+		margin: 25px 0;
+
+		&__column {
+			flex-grow: 1;
+
+			&-select,
+			&-input {
+				padding: 3px 10px 3px 10px;
+				margin: 0px;
+				width: 100%;
+				height: 46px;
+				border: 1px solid #cccccc;
+				background-color: white !important;
+				outline: none;
+				background: transparent;
+				font-size: 16px;
+				color: #333;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+
+			.-select {
+				cursor: pointer;
+				text-align-last: center;
+			}
+
+			.-button[type="button"] {
+				display: inline-block;
+				cursor: pointer;
+				width: 100%;
+				margin: 0px;
+				padding: 11px 0px 11px 0px;
+				text-decoration: none;
+				font-size: 16px;
+				font-weight: normal;
+				color: #ffffff;
+				text-align: center;
+				line-height: 150%;
+				background-color: #272726 !important;
+				border: 0px;
+				-webkit-appearance: none;
+				border-radius: 0;
+
+				&:hover {
+					color: #ececec;
+					background-color: #383837 !important;
+				}
+			}
+		}
+	}
+
+	&__mobile {
+		display: none;
+	}
+
+	@media screen and (max-width: 768px) {
+		&__desktop em {
+			display: none;
+		}
+		&__mobile {
+			display: block;
+		}
+	}
+}

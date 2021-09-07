@@ -96,11 +96,6 @@ class Admin
 			$checked ? \esc_attr($this->options['page_ids']['thailotto']) : 0
 		);
 
-		if ($checked) {
-			printf(
-				' <span class="description">ShortCode: <code>[wp-lotto-auto-update path="thailotto" page_id="%d"]</code></span>',
-				$this->options['page_ids']['thailotto']
-			);
-		}
+		print(' <span class="description">ShortCode: <code>[wp-lotto-auto-update path="thailotto"]</code></span>');
 	}
 }

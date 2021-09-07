@@ -18,7 +18,7 @@ class ShortCode
 	}
 
 	/**
-	 * The [wp-lotto-auto-update path="x" page_id="x"] shortCode.
+	 * The [wp-lotto-auto-update path="x"] shortCode.
 	 *
 	 * Accepts a title and will display a box.
 	 *
@@ -31,15 +31,16 @@ class ShortCode
 		$atts = array_change_key_case((array) $atts, CASE_LOWER);
 		$atts = \shortcode_atts([
 			'path' => '',
+			'layout' => '',
 		], $atts);
 		extract($atts);
 
 		$date = \get_query_var('lotto-date');
 		if (!Helper::isDate($date)) {
-			$date = date('Y-m-d', \current_time('timestamp'));
+			$date = '';
 		}
 
-		if ($path !== '' && !Helper::isPath($path)) {
+		if (!Helper::isPath($path)) {
 			return sprintf('<p>%s</p>', \__('Path does not exist.', 'wp-lotto-auto-update'));
 		}
 
@@ -48,22 +49,26 @@ class ShortCode
 			return sprintf('<p>%s</p>', \__('Failed to retrieve data.', 'wp-lotto-auto-update'));
 		}
 
-		ob_start();
-
-		if ($path == '') {
-			$path = 'main';
+		$layouts = [];
+		if ($layout != '') {
+			$layouts = explode(',', $layout);
+			$layouts = array_map('trim', $layout);
 		}
 
+		ob_start();
+
 		$container_start = '
-		<article class="wp-lotto-auto-update-container-' . $path . '">
+		<article class="wp-lotto-auto-update-container -' . $path . '">
 			<div class="wp-lotto-auto-update-container__wrap">';
 
 		echo \apply_filters('wp_lotto_auto_update_container_start', $container_start, $path);
 
-		\do_action("wp_lotto_auto_update_container_content_{$path}", [
-			'date' => $date,
-			'result' => $result,
-		]);
+		/**
+		 * @param array $data result data api.
+		 * @param array $layouts position layout
+		 * @param string $date YYYY-MM-DD
+		 */
+		\do_action("wp_lotto_auto_update_container_{$path}", $result['data'], $layouts, $date);
 
 		$container_end = '
 			</div>

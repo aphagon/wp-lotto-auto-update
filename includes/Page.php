@@ -17,6 +17,18 @@ class Page
 		$this->options = \get_option('wp_lotto_auto_update_get_options');
 	}
 
+	/**
+	 * @param string $path
+	 *
+	 * @return int|false
+	 */
+	public static function optionID(string $path)
+	{
+		$obj = new self();
+
+		return isset($obj->options['page_ids'][$path]) ? $obj->options['page_ids'][$path] : false;
+	}
+
 	public function runAction()
 	{
 		\add_action('init', [$this, 'addQueryVars']);
