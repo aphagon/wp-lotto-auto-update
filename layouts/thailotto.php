@@ -18,8 +18,8 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto')) {
 	function wp_lotto_auto_update_container_thailotto(array $data, array $layouts, string $date)
 	{
 		$lists = apply_filters('wp_lotto_auto_update_container_thailotto_layouts', [
-			'search',
 			'select-date',
+			'search',
 			'highlight',
 			'another-first',
 			'another',
