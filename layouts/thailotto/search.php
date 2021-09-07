@@ -20,7 +20,7 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_search')) 
 				<input type="text" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;" id="WpLottoAutoUpdateCheckNumber" class="wp-lotto-auto-update__select-date-form__column-input">
 			</div>
 			<div class="wp-lotto-auto-update__select-date-form__column">
-				<button type="button" class="wp-lotto-auto-update__select-date-form__column-button" onclick="return clickWpLottoAutoUpdateCheckLotto();"><?php _e('ตรวจผลรางวัล', 'lotto-auto-free'); ?></button>
+				<button type="button" class="wp-lotto-auto-update__select-date-form__column-button" onclick="return clickWpLottoAutoUpdateCheckLotto();"><?php _e('ตรวจผลรางวัล', 'wp-lotto-auto-update'); ?></button>
 			</div>
 		</section>
 		<section id="WpLottoAutoUpdateMessage" style="margin-bottom: 30px"></section>
@@ -30,13 +30,13 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_search')) 
 
 			function clickWpLottoAutoUpdateCheckLotto() {
 				let msgEl = document.getElementById('WpLottoAutoUpdateMessage');
-				msg = '<?php _e('ไม่ถูกรางวัลใด ๆ', 'lotto-auto-free'); ?>';
+				msg = '<?php _e('ไม่ถูกรางวัลใด ๆ', 'wp-lotto-auto-update'); ?>';
 
 				const filter = document.getElementById('WpLottoAutoUpdateCheckNumber').value;
 
 				let intRegex = /^\d+$/;
 				if (intRegex.test(filter) && filter.length !== 6) {
-					msgEl.innerHTML = '<?php _e('กรุณาระบุหมายเลขสลากให้ถูกต้อง', 'lotto-auto-free'); ?>';
+					msgEl.innerHTML = '<?php _e('กรุณาระบุหมายเลขสลากให้ถูกต้อง', 'wp-lotto-auto-update'); ?>';
 					return false;
 				}
 
