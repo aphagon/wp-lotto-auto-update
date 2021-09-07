@@ -59,6 +59,34 @@ final class Helper
 	}
 
 	/**
+	 * @param int $month
+	 *
+	 * @return string|array
+	 */
+	public static function getMonths($month = 0)
+	{
+		$months = [
+			'',
+			'มกราคม',
+			'กุมภาพันธ์',
+			'มีนาคม',
+			'เมษายน',
+			'พฤษภาคม',
+			'มิถุนายน',
+			'กรกฎาคม',
+			'สิงหาคม',
+			'กันยายน',
+			'ตุลาคม',
+			'พฤศจิกายน',
+			'ธันวาคม',
+		];
+
+		$key = sprintf('%d', $month);
+
+		return !empty($months[$key]) ? $months[$key] : $months;
+	}
+
+	/**
 	 * @param string $str
 	 *
 	 * @return string date YYYY-MM-DD
@@ -69,20 +97,7 @@ final class Helper
 		$arr = array_map('trim', $exp);
 		list($dd, $mm, $yyyy) = $arr;
 
-		$months = [
-			'มกราคม' => 1,
-			'กุมภาพันธ์' => 2,
-			'มีนาคม' => 3,
-			'เมษายน' => 4,
-			'พฤษภาคม' => 5,
-			'มิถุนายน' => 6,
-			'กรกฏาคม' => 7,
-			'สิงหาคม' => 8,
-			'กันยายน' => 9,
-			'ตุลาคม' => 10,
-			'พฤศจิกายน' => 11,
-			'ธันวาคม' => 12,
-		];
+		$months = array_flip(static::getMonths());
 		$mm = !empty($months[$mm]) ? $months[$mm] : 0;
 
 		$date = sprintf('%d-%02d-%02d', $yyyy, $mm, $dd);

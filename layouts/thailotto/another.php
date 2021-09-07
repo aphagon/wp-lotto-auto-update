@@ -2,30 +2,30 @@
 
 defined('ABSPATH') || die();
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_another')) {
+if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_another')) {
+	add_action('wp_lotto_auto_update_container_thailotto_layout_another', 'wp_lotto_auto_update_container_thailotto_layout_another', 10, 2);
 	/**
-	 * @param array $data {
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'data' => array
-	 * }
-	 *
-	 * @return string
+	 * @param array $data
+	 * @param string $date
 	 */
-	function wp_lotto_auto_update_layout_thailotto_another(array $data)
+	function wp_lotto_auto_update_container_thailotto_layout_another(array $data, string $date)
 	{
-		foreach ($data['result']['data']['items'] as $key => $value) :
+		if (empty($data['items'])) {
+			return;
+		}
+
+		foreach ($data['items'] as $key => $value) :
 			if (in_array($key, [1, 6, 7, 10, 11])) :
 				continue;
 			endif;
+?>
 
-			\do_action('wp_lotto_auto_update_layout_thailotto_another_before'); ?>
-
-			<section class="lotto-auto-free-thailotto-another">
+			<section class="wp-lotto-auto-update-thailotto__another">
 				<header>
 					<h3>
-						<?php printf(__('ผลสลากกินแบ่งรัฐบาล <strong>รางวัลที่ %d</strong>', 'lotto-auto-free'), $key); ?>
+						<?php printf(__('ผลสลากกินแบ่งรัฐบาล <strong>รางวัลที่ %d</strong>', 'wp-lotto-auto-update'), $key); ?>
 						<small>
-							<?php printf(__('มี %s รางวัล รางวัลละ %s บาท', 'lotto-auto-free'), $value['info'][0], number_format($value['info'][1])); ?>
+							<?php printf(__('มี %s รางวัล รางวัลละ %s บาท', 'wp-lotto-auto-update'), $value['info'][0], number_format($value['info'][1])); ?>
 						</small>
 					</h3>
 				</header>
@@ -49,7 +49,6 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_another')) {
 			</section>
 
 <?php
-			\do_action('wp_lotto_auto_update_layout_thailotto_another_after');
 		endforeach;
 	}
 }

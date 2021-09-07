@@ -2,62 +2,64 @@
 
 defined('ABSPATH') || die();
 
-use LottoAutoFree\Curl;
-use LottoAutoFree\Helper;
+use WpLottoAutoUpdate\Helper;
+use WpLottoAutoUpdate\Page;
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
+if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_select_date')) {
+	add_action('wp_lotto_auto_update_container_thailotto_layout_select_date', 'wp_lotto_auto_update_container_thailotto_layout_select_date', 10, 2);
 	/**
-	 * @param array $data {
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'data' => array
-	 * }
-	 *
-	 * @return string
+	 * @param array $data
+	 * @param string $date
 	 */
-	function wp_lotto_auto_update_layout_thailotto_select_date(array $data)
+	function wp_lotto_auto_update_container_thailotto_layout_select_date(array $data, string $date)
 	{
-		$splitDate = Helper::splitDate($data['date']);
-		$lottoYears = Curl::GetThaiLottoYears();
+		$time = strtotime($date);
+		$dd = date_i18n('j', $time);
+		$mm = date_i18n('F', $time);
+		$yyyy = intval(date_i18n('Y', $time)) - 543;
+
+		$lottoYears = Helper::getThaiLottoYears();
 		if (empty($lottoYears['success'])) {
-			_e('Failed to retrieve data.', 'lotto-auto-free');
+			_e('Failed to retrieve data.', 'wp-lotto-auto-update');
 			return;
 		}
 
 		$jsonYears = [];
 		foreach ($lottoYears['data'] as $year => $histories) {
 			foreach ($histories as $history) {
-				$slDate = Helper::splitDate($history);
-				$d = $slDate['day'];
-				$m = $slDate['month'];
-				$y = $slDate['year'];
-				$jsonYears[$year][] = sprintf('%d %s %d', $d, Helper::getMonths($m), ($y + 543));;
+				$time = strtotime($history);
+				$dd = date_i18n('j', $time);
+				$mm = date_i18n('F', $time);
+				$yyyy = intval(date_i18n('Y', $time)) + 543;
+
+				$jsonYears[$year][] = sprintf('%d %s %d', $dd, $mm, $yyyy);
 			}
 		}
 ?>
 
-		<section class="lotto-auto-free-select-date-form">
-			<div class="lotto-auto-free-select-date-form__column">
-				<select id="LottoAutoFreeThaiLottoSelectYear" class="lotto-auto-free-select-date-form__column-select">
-					<option value=""><?php _e('ปี', 'lotto-auto-free'); ?></option>
+		<section class="wp-lotto-auto-update__select-date-form">
+			<div class="wp-lotto-auto-update__select-date-form__column">
+				<select id="WpLottoAutoUpdateThaiLottoSelectYear" class="wp-lotto-auto-update__select-date-form__column-select">
+					<option value=""><?php _e('ปี', 'wp-lotto-auto-update'); ?></option>
 					<?php
 					$years = array_keys($lottoYears['data']);
 					rsort($years);
 					foreach ($years as $year) {
-						$selected = ($splitDate['year'] == $year) ? 'selected="selected"' : '';
+						$selected = ($yyyy == $year) ? 'selected="selected"' : '';
 						printf('<option value="%s" %s>%d</option>', $year, $selected, intval($year) + 543);
 					}
 					?>
 				</select>
 			</div>
-			<div class="lotto-auto-free-select-date-form__column">
-				<select id="LottoAutoFreeThaiLottoSelectDate" class="lotto-auto-free-select-date-form__column-select">
-					<option value=""><?php _e('งวดประจำวันที่', 'lotto-auto-free'); ?></option>
+			<div class="wp-lotto-auto-update__select-date-form__column">
+				<select id="WpLottoAutoUpdateThaiLottoSelectDate" class="wp-lotto-auto-update__select-date-form__column-select">
+					<option value=""><?php _e('งวดประจำวันที่', 'wp-lotto-auto-update'); ?></option>
 					<?php
-					if (!empty($jsonYears[$splitDate['year']])) {
-						foreach ($jsonYears[$splitDate['year']] as $date) {
-							list($d, $m, $y) = explode(' ', $date);
+					if (!empty($jsonYears[$yyyy])) {
+						foreach ($jsonYears[$yyyy] as $date) {
+							list($d, $m, $y) = array_map('trim', explode(' ', $date));
 							$arrMonth = array_flip(Helper::getMonths());
-							$d = sprintf('%d-%02d-%02d', intval(trim($y)) - 543, $arrMonth[trim($m)], trim($d));
+							$d = sprintf('%d-%02d-%02d', intval(trim($y)), $arrMonth[trim($m)], trim($d));
 
 							$selected = ($data['date'] == $d) ? 'selected="selected"' : '';
 							printf('<option value="%s" %s>%s</option>', $d, $selected, $date);
@@ -66,8 +68,8 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
 					?>
 				</select>
 			</div>
-			<div class="lotto-auto-free-select-date-form__column">
-				<button type="button" class="lotto-auto-free-select-date-form__column-button" onclick="return clickLottoAutoFreeThaiLottoSelectDate();"><?php _e('ค้นหา', 'lotto-auto-free'); ?></button>
+			<div class="wp-lotto-auto-update__select-date-form__column">
+				<button type="button" class="wp-lotto-auto-update__select-date-form__column-button" onclick="return clickWpLottoAutoUpdateThaiLottoSelectDate();"><?php _e('ค้นหา', 'wp-lotto-auto-update'); ?></button>
 			</div>
 		</section>
 
@@ -75,10 +77,10 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
 			const lottoYears = <?php echo json_encode($jsonYears); ?>;
 			const lottoMonths = <?php echo json_encode(Helper::getMonths()); ?>;
 
-			const optsDays = document.getElementById('LottoAutoFreeThaiLottoSelectDate');
-			document.getElementById('LottoAutoFreeThaiLottoSelectYear').addEventListener('change', function() {
+			const optsDays = document.getElementById('WpLottoAutoUpdateThaiLottoSelectDate');
+			document.getElementById('WpLottoAutoUpdateThaiLottoSelectYear').addEventListener('change', function() {
 				optsDays.innerHTML = '';
-				optsDays.options[optsDays.options.length] = new Option('<?php echo _e('งวดประจำวันที่', 'lotto-auto-free'); ?>', '');
+				optsDays.options[optsDays.options.length] = new Option('<?php echo _e('งวดประจำวันที่', 'wp-lotto-auto-update'); ?>', '');
 				if (this.value == '') return
 
 				lottoYears[this.value].forEach(function(history, i) {
@@ -96,12 +98,12 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_select_date')) {
 				});
 			});
 
-			function clickLottoAutoFreeThaiLottoSelectDate() {
-				const date = document.getElementById("LottoAutoFreeThaiLottoSelectDate").value;
+			function clickWpLottoAutoUpdateThaiLottoSelectDate() {
+				const date = document.getElementById("WpLottoAutoUpdateThaiLottoSelectDate").value;
 				if (date != '') {
-					window.location = '<?php echo esc_url(get_permalink()); ?>lotto-date-' + date;
+					window.location = '<?php echo esc_url(get_permalink(Page::optionID('thailotto'))); ?>lotto-date-' + date;
 				} else {
-					alert('<?php _e('จำเป็นต้องเลือกงวด', 'lotto-auto-free'); ?>');
+					alert('<?php _e('จำเป็นต้องเลือกงวด', 'wp-lotto-auto-update'); ?>');
 				}
 
 				return false;

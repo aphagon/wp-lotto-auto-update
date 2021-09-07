@@ -96,7 +96,6 @@ final class Activate
 		}
 
 		// Hooks Templates.
-		$tag = 'wp_lotto_auto_update_container_thailotto';
 		\add_action('wp_lotto_auto_update_container_thailotto', 'wp_lotto_auto_update_container_thailotto', 10, 3);
 	}
 

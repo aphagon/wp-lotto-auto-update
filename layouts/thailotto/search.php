@@ -5,37 +5,34 @@ defined('ABSPATH') || die();
 use WpLottoAutoUpdate\Curl;
 use WpLottoAutoUpdate\Helper;
 
-if (!function_exists('wp_lotto_auto_update_layout_thailotto_search')) {
+if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_search')) {
+	add_action('wp_lotto_auto_update_container_thailotto_layout_search', 'wp_lotto_auto_update_container_thailotto_layout_search', 10, 2);
 	/**
-	 * @param array $data {
-	 * 	'date' => 'YYYY-MM-DD',
-	 * 	'data' => array
-	 * }
-	 *
-	 * @return string
+	 * @param array $data
+	 * @param string $date
 	 */
-	function wp_lotto_auto_update_layout_thailotto_search(array $data)
+	function wp_lotto_auto_update_container_thailotto_layout_search(array $data, string $date)
 	{
 ?>
 
-		<section id="LottoAutoFreeThaiLottoCheck" class="lotto-auto-free-select-date-form" style="margin-bottom: 0;">
-			<div class="lotto-auto-free-select-date-form__column">
-				<input type="text" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;" id="LottoAutoFreeThaiLottoCheckNumber" class="lotto-auto-free-select-date-form__column-input">
+		<section id="WpLottoAutoUpdateCheck" class="wp-lotto-auto-update__select-date-form" style="margin-bottom: 0;">
+			<div class="wp-lotto-auto-update__select-date-form__column">
+				<input type="text" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;" id="WpLottoAutoUpdateCheckNumber" class="wp-lotto-auto-update__select-date-form__column-input">
 			</div>
-			<div class="lotto-auto-free-select-date-form__column">
-				<button type="button" class="lotto-auto-free-select-date-form__column-button" onclick="return clickLottoAutoFreeThaiLottoCheckLotto();"><?php _e('ตรวจผลรางวัล', 'lotto-auto-free'); ?></button>
+			<div class="wp-lotto-auto-update__select-date-form__column">
+				<button type="button" class="wp-lotto-auto-update__select-date-form__column-button" onclick="return clickWpLottoAutoUpdateCheckLotto();"><?php _e('ตรวจผลรางวัล', 'lotto-auto-free'); ?></button>
 			</div>
 		</section>
-		<section id="LottoAutoFreeThaiLottoMessage" style="margin-bottom: 30px"></section>
+		<section id="WpLottoAutoUpdateMessage" style="margin-bottom: 30px"></section>
 
 		<script>
-			const lottoNumbers = <?php echo json_encode($data['result']['data']['items']); ?>;
+			const lottoNumbers = <?php echo json_encode($data['items']); ?>;
 
-			function clickLottoAutoFreeThaiLottoCheckLotto() {
-				let msgEl = document.getElementById('LottoAutoFreeThaiLottoMessage');
+			function clickWpLottoAutoUpdateCheckLotto() {
+				let msgEl = document.getElementById('WpLottoAutoUpdateMessage');
 				msg = '<?php _e('ไม่ถูกรางวัลใด ๆ', 'lotto-auto-free'); ?>';
 
-				const filter = document.getElementById('LottoAutoFreeThaiLottoCheckNumber').value;
+				const filter = document.getElementById('WpLottoAutoUpdateCheckNumber').value;
 
 				let intRegex = /^\d+$/;
 				if (intRegex.test(filter) && filter.length !== 6) {
@@ -77,7 +74,7 @@ if (!function_exists('wp_lotto_auto_update_layout_thailotto_search')) {
 					}
 				});
 
-				msgEl.innerHTML = '<p class="lotto-auto-free-thailotto-search-number-text">' + msg + '</p>';
+				msgEl.innerHTML = '<p class="wp-lotto-auto-update__search-number-text">' + msg + '</p>';
 
 				return false;
 			}

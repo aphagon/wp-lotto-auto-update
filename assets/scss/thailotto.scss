@@ -17,16 +17,6 @@
 		}
 	}
 
-	.search-number-text {
-		text-align: center;
-		padding: 15px;
-		font-size: 20px;
-		background-color: #f0f0f0;
-		color: #d12530;
-		border: 1px solid #d1d1d1;
-	}
-
 	@import "another";
 	@import "highlight";
-	@import "select-date";
 }

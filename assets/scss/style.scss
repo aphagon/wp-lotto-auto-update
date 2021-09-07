@@ -38,6 +38,15 @@ $table-th-font-color: #2d2d2d;
 		color: #ac0a0a;
 	}
 
+	&__search-number-text {
+		text-align: center;
+		padding: 15px;
+		font-size: 20px;
+		background-color: #f0f0f0;
+		color: #d12530;
+		border: 1px solid #d1d1d1;
+	}
+
 	&__table {
 		border: 1px solid $table-border-color;
 		border-collapse: collapse;
@@ -133,12 +142,12 @@ $table-th-font-color: #2d2d2d;
 				box-sizing: border-box;
 			}
 
-			.-select {
+			&-select {
 				cursor: pointer;
 				text-align-last: center;
 			}
 
-			.-button[type="button"] {
+			&-button[type="button"] {
 				display: inline-block;
 				cursor: pointer;
 				width: 100%;
