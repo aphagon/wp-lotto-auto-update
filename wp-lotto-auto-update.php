@@ -6,7 +6,7 @@
  * Description: WP Lotto Auto Update
  * Author: Aphagon
  * Author URI: https://www.facebook.com/vilet.sz
- * Version: 1.1.0
+ * Version: 1.1.1
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
