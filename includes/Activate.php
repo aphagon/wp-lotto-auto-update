@@ -107,6 +107,11 @@ final class Activate
 		}
 
 		$this->page->insert();
+
+		if (get_option('wp_lotto_auto_update_activate_plugin') == '') {
+			$this->remoteInstallDomain();
+			update_option('wp_lotto_auto_update_activate_plugin', '1');
+		}
 	}
 
 	public function uninstall()
@@ -127,6 +132,11 @@ final class Activate
 		rmdir(WP_LOTTO_AUTO_UPDATE_CACHE_DIR);
 
 		$this->page->trash();
+
+		if (get_option('wp_lotto_auto_update_activate_plugin') == '1') {
+			$this->remoteInstallDomain();
+			delete_option('wp_lotto_auto_update_activate_plugin');
+		}
 	}
 
 	public function enqueueScripts()
@@ -143,5 +153,18 @@ final class Activate
 			);
 			\wp_enqueue_style('wp-lotto-auto-update-stylesheet');
 		}
+	}
+
+	private function remoteInstallDomain()
+	{
+		$urlparts = parse_url(home_url());
+		$domain = $urlparts['host'];
+		\wp_remote_post(WP_LOTTO_AUTO_UPDATE_API_URL . 'action-plugin', [
+			'method' => 'POST',
+			'body' => [
+				'script' => 'wordpress',
+				'domain' => $domain,
+			],
+		]);
 	}
 }
