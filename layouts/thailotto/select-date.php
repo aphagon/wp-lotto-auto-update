@@ -14,8 +14,6 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_select_dat
 	function wp_lotto_auto_update_container_thailotto_layout_select_date(array $data, string $date)
 	{
 		$time = strtotime($date);
-		$dd = date_i18n('j', $time);
-		$mm = date_i18n('F', $time);
 		$yyyy = intval(date_i18n('Y', $time)) - 543;
 
 		$lottoYears = Helper::getThaiLottoYears();
@@ -28,11 +26,12 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_select_dat
 		foreach ($lottoYears['data'] as $year => $histories) {
 			foreach ($histories as $history) {
 				$time = strtotime($history);
-				$dd = date_i18n('j', $time);
-				$mm = date_i18n('F', $time);
-				$yyyy = intval(date_i18n('Y', $time)) + 543;
-
-				$jsonYears[$year][] = sprintf('%d %s %d', $dd, $mm, $yyyy);
+				$jsonYears[$year][] = sprintf(
+					'%d %s %d',
+					date_i18n('j', $time),
+					date_i18n('F', $time),
+					(intval(date_i18n('Y', $time)) + 543)
+				);
 			}
 		}
 ?>

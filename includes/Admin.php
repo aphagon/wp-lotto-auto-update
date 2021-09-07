@@ -35,15 +35,45 @@ class Admin
 
 		<div class="wrap">
 			<h2><?php echo \__('Lotto Setting', 'wp-lotto-auto-update'); ?></h2>
-			<p></p>
 			<?php \settings_errors(); ?>
 
 			<form method="post" action="options.php">
 				<?php
 				\settings_fields('wp_lotto_auto_update_group');
 				\do_settings_sections('wp_lotto_auto_update_admin_sections');
-				\submit_button();
 				?>
+
+				<div id="poststuff">
+					<div id="post-body" class="metabox-holder columns-2">
+						<div id="post-body-content">
+							<div class="meta-box-sortables ui-sortable">
+								<div class="postbox">
+									<div class="inside">
+										<p><?php esc_attr_e(
+												'หากต้องการสนับสนุนสามารถโดเนทให้ผมได้ที่บัญชีด้านล่างนะครับ เพื่อเป็นกำลังในใจการอัพเดตปลั๊กอินเวอร์ชั่นต่อๆ ไปครับ',
+												'wp-lotto-auto-update'
+											); ?></p>
+										<p>
+											<strong><?php esc_attr_e('บัญชี', 'wp-lotto-auto-update'); ?>:</strong>
+											<span><?php esc_attr_e('ธนาคารไทยพาณิชย์', 'wp-lotto-auto-update'); ?></span>
+										</p>
+										<p>
+											<strong><?php esc_attr_e('เลขที่บัญชี', 'wp-lotto-auto-update'); ?>:</strong>
+											<span><?php esc_attr_e('587-2-733-902', 'wp-lotto-auto-update'); ?></span>
+										</p>
+										<p>
+											<strong><?php esc_attr_e('ชื่อ', 'wp-lotto-auto-update'); ?>:</strong>
+											<span><?php esc_attr_e('นายอาภากร พรหมดีสาร', 'wp-lotto-auto-update'); ?></span>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br class="clear">
+				</div>
+
+				<?php \submit_button(); ?>
 			</form>
 		</div>
 
