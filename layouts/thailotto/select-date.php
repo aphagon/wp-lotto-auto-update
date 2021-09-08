@@ -28,9 +28,9 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_select_dat
 				$time = strtotime($history);
 				$jsonYears[$year][] = sprintf(
 					'%d %s %d',
-					date_i18n('j', $time),
-					date_i18n('F', $time),
-					(intval(date_i18n('Y', $time)) + 543)
+					date('j', $time),
+					Helper::getMonths(date('m', $time)),
+					(intval(date('Y', $time)) + 543)
 				);
 			}
 		}
