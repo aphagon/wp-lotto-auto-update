@@ -35,7 +35,7 @@ class ShortCode
 		], $atts);
 		extract($atts);
 
-		$date = \get_query_var('lotto-date');
+		$date = !empty($_GET['lotto-date']) ? trim($_GET['lotto-date']) : '';
 		if (!Helper::isDate($date)) {
 			$date = '';
 		}

@@ -100,7 +100,9 @@ if (!function_exists('wp_lotto_auto_update_container_thailotto_layout_select_dat
 			function clickWpLottoAutoUpdateThaiLottoSelectDate() {
 				const date = document.getElementById("WpLottoAutoUpdateThaiLottoSelectDate").value;
 				if (date != '') {
-					window.location = '<?php echo esc_url(get_permalink(Page::optionID('thailotto'))); ?>lotto-date-' + date;
+					let linkStr = '<?php echo esc_url(add_query_arg(['lotto-date' => '#string'], get_permalink(Page::optionID('thailotto')))); ?>'
+					linkStr.replace("#string#", date);
+					window.location = linkStr.replace("#string#", date);
 				} else {
 					alert('<?php _e('จำเป็นต้องเลือกงวด', 'wp-lotto-auto-update'); ?>');
 				}

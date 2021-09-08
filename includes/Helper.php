@@ -46,14 +46,14 @@ final class Helper
 	public static function replaceTitleDate(string $str, string $date)
 	{
 		if (!Helper::isDate($date)) {
-			$date = date_i18n('Y-m-d', \current_time('timestamp'));
+			$date = date('Y-m-d', \current_time('timestamp'));
 		}
 
 		$time = strtotime($date);
 
-		$dd = date_i18n('j', $time);
-		$mm = date_i18n('F', $time);
-		$yyyy = intval(date_i18n('Y', $time));
+		$dd = date('j', $time);
+		$mm = date('F', $time);
+		$yyyy = intval(date('Y', $time));
 
 		return str_replace(['{dd}', '{mm}', '{yyyy}'], [$dd, $mm, $yyyy], $str);
 	}

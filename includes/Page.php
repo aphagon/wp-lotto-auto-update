@@ -31,8 +31,6 @@ class Page
 
 	public function runAction()
 	{
-		\add_action('init', [$this, 'addQueryVars']);
-
 		// Disable admin page.
 		$uri_path = $_SERVER['REQUEST_URI'];
 		if (strpos($uri_path, '/wp-admin') === false) {
@@ -56,7 +54,7 @@ class Page
 			&& isset($this->options['page_ids'])
 			&& is_array($this->options['page_ids'])
 		) {
-			$date = \get_query_var('lotto-date');
+			$date = !empty($_GET['lotto-date']) ? trim($_GET['lotto-date']) : '';
 			foreach ($this->options['page_ids'] as $path => $page_id) {
 				if ($page_id == $post->ID) {
 					$res = Helper::curl($path, $date);
@@ -85,24 +83,6 @@ class Page
 		$title['title'] = $this->filterPostTitle($title['title']);
 
 		return $title;
-	}
-
-	// Adds a rewrite rule that transforms a URL structure to a set of query vars.
-	public function addQueryVars()
-	{
-		global $wp;
-		$wp->add_query_var('lotto-date');
-
-		\add_rewrite_rule(
-			'(.?.+?)/lotto-date-([0-9]{4}-[0-9]{1,2}-[0-9]{1,2})/?$',
-			'index.php?pagename=$matches[1]&lotto-date=$matches[2]',
-			'top'
-		);
-
-		if (!\get_option('wp_lotto_auto_update_permalinks_flushed')) {
-			\flush_rewrite_rules(false);
-			\update_option('wp_lotto_auto_update_permalinks_flushed', 1);
-		}
 	}
 
 	public function insert()
@@ -155,7 +135,5 @@ class Page
 				]);
 			}
 		}
-
-		\delete_option('wp_lotto_auto_update_permalinks_flushed');
 	}
 }
